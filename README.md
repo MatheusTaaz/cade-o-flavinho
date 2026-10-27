@@ -8,6 +8,16 @@
   </a>
 </p>
 
+<p align="center">
+  <img src="assets/images/chrome.png" width="45" alt="Google Chrome">
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/images/edge.png" width="45" alt="Microsoft Edge">
+</p>
+
+<p align="center">
+  <strong>⚠️ Compatível atualmente com Google Chrome e Microsoft Edge</strong>
+</p>
+
 ## 🎮 Features
 
 - 5 rodadas com geração procedural de cenas
