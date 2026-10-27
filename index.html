@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#1b1430">
+  <title>Cadê o Flavinho?</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- HUD -->
+    <header id="hud" class="hidden">
+      <div id="brand-title" class="brand" role="button" tabindex="0" title="Clique para ver os créditos">Cadê o <b>Flavinho</b>?</div>
+      <div class="stats">
+        <div class="stat"><span data-text="hudRound">RODADA</span><strong id="hud-round">1/5</strong></div>
+        <div class="stat stat-score"><span data-text="hudScore">PONTOS</span><strong id="hud-score">0</strong></div>
+        <div class="stat stat-combo"><span data-text="hudCombo">COMBO</span><strong id="hud-combo">x1</strong></div>
+        <div id="btn-npc-hints" class="stat stat-npcs clickable-stat" role="button" tabindex="0" title="Clique para ver as dicas dos 5 NPCs escondidos"><span data-text="hudNpcs">NPCs encontrados:</span><strong id="hud-npcs">0/5</strong></div>
+        <div class="stat stat-errors"><span data-text="hudErrors">ERROS</span><strong id="hud-errors">0/10</strong></div>
+        <div class="stat"><span data-text="hudTime">TEMPO</span><strong id="hud-time">00:00</strong></div>
+      </div>
+      <div class="tools">
+        <button id="btn-new-game" class="btn-hud-new" title="Iniciar um Novo Jogo do zero" data-text="newGameButton">NOVO JOGO</button>
+        <button id="btn-audio-toggle" class="tool" title="Ligar/Desligar música e efeitos" aria-label="Ligar ou desligar áudio">🔊</button>
+        <button id="btn-suspect" class="tool" title="Ver o suspeito" aria-label="Ver o suspeito">🕵️</button>
+        <button id="btn-zoom-out" class="tool" title="Diminuir zoom" aria-label="Diminuir zoom">−</button>
+        <button id="btn-zoom-in" class="tool" title="Aumentar zoom" aria-label="Aumentar zoom">+</button>
+        <button id="btn-fit" class="tool" title="Ver cena inteira" aria-label="Ver cena inteira">⤢</button>
+      </div>
+    </header>
+
+    <!-- Mini Créditos (Easter Egg ao clicar no título "Cadê o Flavinho?") -->
+    <div id="credits-popover" class="credits-popover hidden" role="dialog" aria-label="Créditos do jogo">
+      <div class="credits-line"><strong>Desenvolvido por: Matheus Taaz ©</strong></div>
+      <div class="credits-line"><strong>Menção Honrosa: Claudinha</strong></div>
+      <div class="credits-line credits-footer"><strong>Brasil (Fez o L) - 2026</strong></div>
+    </div>
+
+    <!-- Cena -->
+    <main id="stage">
+      <canvas id="scene" aria-label="Cena do jogo. Encontre o Flavinho."></canvas>
+      <div id="toast" role="status" aria-live="polite"></div>
+      <div id="round-banner" class="hidden" role="status" aria-live="assertive">
+        <div id="round-banner-text" class="round-banner-text"></div>
+        <button id="btn-next-round" class="btn-next-round" data-text="nextRoundButton">PRÓXIMA RODADA →</button>
+      </div>
+
+      <!-- Caixa de diálogo dos NPCs (Easter Eggs interativos) -->
+      <div id="npc-dialog" class="npc-dialog hidden" role="dialog" aria-live="polite">
+        <canvas id="npc-portrait" width="96" height="96"></canvas>
+        <div class="npc-dialog-body">
+          <div class="npc-dialog-head">
+            <strong id="npc-name">JONES MANOEL</strong>
+            <span id="npc-subtitle" class="npc-subtitle"></span>
+          </div>
+          <p id="npc-speech"></p>
+        </div>
+        <button id="btn-close-npc" class="btn-npc-close" title="Fechar fala" aria-label="Fechar fala">✕</button>
+      </div>
+
+      <div id="hint" class="hidden" data-text="hint"></div>
+    </main>
+
+    <!-- Tela inicial -->
+    <section id="start-screen" class="screen">
+      <div class="card start-card">
+        <h1 id="start-title" class="title" role="button" tabindex="0" title="Clique para ver os créditos">Cadê o <span>Flavinho</span>?</h1>
+        <p class="tagline" data-text="tagline"></p>
+        <div class="poster">
+          <div class="poster-head" data-text="posterTitle"></div>
+          <canvas id="poster-canvas" width="360" height="300"></canvas>
+          <ul class="poster-traits" id="poster-traits"></ul>
+        </div>
+        <p class="level-name" id="level-name"></p>
+        <button id="btn-start" class="btn-primary" data-text="startButton"></button>
+        <p class="small" data-text="controlsHelp"></p>
+      </div>
+    </section>
+
+    <!-- Fim de Jogo (Game Over ao atingir 10 erros) -->
+    <section id="win-screen" class="screen hidden">
+      <div class="card win-card">
+        <h2 class="win-title" id="win-title" data-text="gameOverTitle"></h2>
+        <p class="win-sub" id="win-sub"></p>
+        <div class="win-stats">
+          <div><span data-text="hudRound">RODADA</span><strong id="win-round">1</strong></div>
+          <div><span data-text="hudScore">PONTOS</span><strong id="win-score">0</strong></div>
+          <div><span data-text="hudTime">TEMPO</span><strong id="win-time">00:00</strong></div>
+          <div><span data-text="hudErrors">ERROS</span><strong id="win-errors">10/10</strong></div>
+          <div class="win-stat-npcs"><span data-text="hudNpcs">NPCs encontrados:</span><strong id="win-npcs">0/5</strong></div>
+        </div>
+        <p class="win-rank" id="win-rank"></p>
+        <div class="win-actions">
+          <button id="btn-share" class="btn-secondary" data-text="shareButton">COMPARTILHAR RESULTADO</button>
+          <button id="btn-download-share" class="btn-secondary hidden" data-text="downloadShareButton">BAIXAR RESULTADO</button>
+          <button id="btn-restart" class="btn-primary" data-text="restartButton">JOGAR NOVAMENTE</button>
+        </div>
+        <p id="share-feedback" class="share-feedback hidden" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Modal do suspeito -->
+    <section id="suspect-modal" class="screen hidden">
+      <div class="card">
+        <div class="poster">
+          <div class="poster-head" data-text="posterTitle"></div>
+          <canvas id="poster-canvas-2" width="360" height="300"></canvas>
+          <ul class="poster-traits" id="poster-traits-2"></ul>
+        </div>
+        <button id="btn-close-suspect" class="btn-primary" data-text="closeSuspect"></button>
+      </div>
+    </section>
+
+    <!-- Painel de Dicas dos 5 NPCs (abre ao clicar em "NPCs encontrados: X/5") -->
+    <section id="npc-hints-modal" class="screen hidden" role="dialog" aria-labelledby="npc-hints-title">
+      <div class="card npc-hints-card">
+        <div class="npc-hints-header">
+          <h2 class="npc-hints-title" id="npc-hints-title" data-text="npcHintsTitle">DICAS DOS NPCs</h2>
+          <span class="npc-hints-progress" id="npc-hints-progress">NPCs encontrados: 0/5</span>
+        </div>
+        <p class="npc-hints-sub" data-text="npcHintsSub">Procure estas 5 figuras espalhadas pela cena (clicar neles não conta como erro!):</p>
+        <ul class="npc-hints-list" id="npc-hints-list">
+          <li id="npc-hint-jones_manoel" class="npc-hint-item">
+            <div class="npc-hint-head"><span id="npc-status-jones_manoel" class="npc-hint-status">?</span><strong>Jones Manoel</strong></div>
+            <p id="npc-hint-text-jones_manoel" class="npc-hint-text">"Procure alguém de óculos e camiseta preta que parece estar pronto para transformar qualquer conversa de praia em uma aula de história."</p>
+          </li>
+          <li id="npc-hint-erika_hilton" class="npc-hint-item">
+            <div class="npc-hint-head"><span id="npc-status-erika_hilton" class="npc-hint-status">?</span><strong>Erika Hilton</strong></div>
+            <p id="npc-hint-text-erika_hilton" class="npc-hint-text">"Com longos cabelos loiros, figurino roxo e microfone na mão, ela provavelmente está em algum lugar onde não passa despercebida."</p>
+          </li>
+          <li id="npc-hint-nikolas_ferreira" class="npc-hint-item">
+            <div class="npc-hint-head"><span id="npc-status-nikolas_ferreira" class="npc-hint-status">?</span><strong>Nikolas Ferreira</strong></div>
+            <p id="npc-hint-text-nikolas_ferreira" class="npc-hint-text">"Procure alguém de terno e peruca loira que parece estar sempre pronto para fazer um discurso no microfone."</p>
+          </li>
+          <li id="npc-hint-lucas_pavanato" class="npc-hint-item">
+            <div class="npc-hint-head"><span id="npc-status-lucas_pavanato" class="npc-hint-status">?</span><strong>Lucas Pavanato</strong></div>
+            <p id="npc-hint-text-lucas_pavanato" class="npc-hint-text">"Talvez você encontre alguém de camisa amarela da seleção tentando chamar bastante atenção para um debate de rua."</p>
+          </li>
+          <li id="npc-hint-lula" class="npc-hint-item">
+            <div class="npc-hint-head"><span id="npc-status-lula" class="npc-hint-status">?</span><strong>Lula</strong></div>
+            <p id="npc-hint-text-lula" class="npc-hint-text">"Procure o barbudo de cabelos brancos e óculos de estrela vermelha que parece mais preocupado em conversar do que procurar o Flavinho."</p>
+          </li>
+        </ul>
+        <button id="btn-close-npc-hints" class="btn-primary" data-text="closeNpcHints">FECHAR</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Núcleo -->
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/audio.js"></script>
+  <!-- Renderização (primitivas de desenho) -->
+  <script src="js/render/draw-utils.js"></script>
+  <script src="js/render/characters.js"></script>
+  <script src="js/render/props.js"></script>
+  <!-- Construção da cena (genérico, reutilizável entre fases) -->
+  <script src="js/scene/people.js"></script>
+  <script src="js/scene/backgrounds.js"></script>
+  <script src="js/scene/factories.js"></script>
+  <script src="js/scene/crowds.js"></script>
+  <script src="js/scene/scene-builder.js"></script>
+  <!-- Dados: textos, NPCs e fases -->
+  <script src="js/data/texts.js"></script>
+  <script src="js/data/npcs.js"></script>
+  <script src="js/levels/level1.js"></script>
+  <script src="js/levels/index.js"></script>
+  <!-- Motor -->
+  <script src="js/render/scene-renderer.js"></script>
+  <script src="js/core/camera.js"></script>
+  <script src="js/core/hit-test.js"></script>
+  <script src="js/core/game.js"></script>
+  <!-- Interface -->
+  <script src="js/ui/share-card.js"></script>
+  <script src="js/ui/ui.js"></script>
+  <script src="js/main.js"></script>
+  <!-- Autoteste (só roda com ?test=1) -->
+  <script src="js/dev/selftest.js"></script>
+</body>
+</html>
