@@ -1,6 +1,6 @@
 # 🔎 Cadê o Flavinho? 🇧🇷🇺🇸
 
-> Jogo web satírico inspirado em *Onde Está Wally?*
+> Jogo web satírico inspirado em *Onde Está Wally?*, consegue achar o Flavinho fujão?🏃🏻‍♂️‍➡️
 
 <p align="center">
   <a href="https://MatheusTaaz.github.io/cade-o-flavinho/">
@@ -8,15 +8,8 @@
   </a>
 </p>
 
-<p align="center">
-  <img src="assets/images/chrome.png" width="45" alt="Google Chrome">
-  &nbsp;&nbsp;&nbsp;
-  <img src="assets/images/edge.png" width="45" alt="Microsoft Edge">
-</p>
-
-<p align="center">
-  <strong>⚠️ Compatível atualmente com Google Chrome e Microsoft Edge</strong>
-</p>
+⚠️ **COMPATIBILIDADE:** no momento, o jogo é compatível apenas com Google Chrome e Microsoft Edge.
+Para uma melhor experiência, recomendamos utilizar uma versão atualizada de um desses navegadores.
 
 ## 🎮 Features
 
