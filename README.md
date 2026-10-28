@@ -34,6 +34,8 @@ Para uma melhor experiência, recomendamos utilizar uma versão atualizada de um
 - Web Audio / HTML Audio API
 - Web Share API
 
+**Vibecoded with Opus 5.5 and Argon 4;**
+
 ## 📁 Estrutura
 
 ```text
