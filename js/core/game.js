@@ -161,11 +161,11 @@
       foundNpcIds.clear();
       state = 'playing';
 
-      buildRoundScene(spotOverride, false);
-      syncHUD();
       ui.showPlayingHUD();
       ui.hideRoundBanner();
       ui.hideNPCDialog();
+      buildRoundScene(spotOverride, false);
+      syncHUD();
       if (audio) audio.startMusic(true);
 
       const now = performance.now();

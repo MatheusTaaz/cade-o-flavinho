@@ -59,12 +59,13 @@
     }
 
     function fitToScreen(coverMobile) {
+      cam.anim = null;
       const { w, h } = viewSize();
       const fitW = w / cam.worldW;
       const fitH = h / cam.worldH;
-      // No celular em pé, começa um pouco mais aproximado para leitura confortável
+      // No celular em pé, preenche toda a altura útil do palco sem deformar a proporção
       const isPortrait = h > w;
-      cam.scale = (coverMobile && isPortrait) ? Math.max(fitW * 1.45, fitH * 0.65) : Math.max(fitW, fitH * 0.92);
+      cam.scale = (coverMobile && isPortrait) ? fitH : Math.max(fitW, fitH * 0.92);
       cam.x = (w - cam.worldW * cam.scale) / 2;
       cam.y = (h - cam.worldH * cam.scale) / 2;
       clamp();

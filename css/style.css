@@ -816,44 +816,333 @@ html, body {
   margin-bottom: 16px;
 }
 
-/* Responsividade Mobile */
-@media (max-width: 600px) {
+/* ========================= RESPONSIVIDADE MOBILE ========================= */
+@media (max-width: 768px) {
   #hud {
-    top: 6px;
-    left: 6px;
-    right: 6px;
-    padding: 6px 10px;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    flex-shrink: 0;
+    margin: 4px 6px 2px;
+    padding: 6px 8px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 5px 6px;
+  }
+
+  .brand {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 0.94rem;
+    line-height: 1.1;
+    justify-self: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tools {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    gap: 4px;
+  }
+
+  .btn-hud-new {
+    height: 26px;
+    padding: 0 8px;
+    font-size: 0.68rem;
+    border-radius: 7px;
+    border-width: 1.5px;
+  }
+
+  .tool {
+    width: 26px;
+    height: 26px;
+    font-size: 0.84rem;
+    border-radius: 7px;
+    border-width: 1.5px;
+  }
+
+  .stats {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1.34fr 0.83fr 0.83fr;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .stat {
+    padding: 3px 6px;
+    border-radius: 7px;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .stat span {
+    font-size: 0.58rem;
+    letter-spacing: 0.2px;
+  }
+
+  .stat strong {
+    font-size: 0.8rem;
+  }
+
+  .credits-popover {
+    top: 40px;
+    left: 8px;
+    max-width: calc(100vw - 16px);
+    padding: 10px 12px;
+    font-size: 0.78rem;
+  }
+
+  #stage {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  #scene {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  #toast {
+    top: 8px;
+    max-width: 92vw;
+    padding: 7px 14px;
+    font-size: 0.84rem;
+  }
+
+  #toast.success {
+    font-size: 0.88rem;
+  }
+
+  #round-banner {
+    bottom: 42px;
+    width: 94vw;
+    padding: 12px 14px;
+    gap: 8px;
+    font-size: 0.88rem;
+    border-radius: 14px;
+  }
+
+  .btn-next-round {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 16px;
+    font-size: 0.96rem;
+  }
+
+  .npc-dialog {
+    bottom: 42px;
+    width: 94vw;
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+
+  #npc-portrait {
+    width: 60px;
+    height: 60px;
+  }
+
+  #npc-name {
+    font-size: 0.9rem;
+  }
+
+  #npc-speech {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  #hint {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    flex-shrink: 0;
+    width: calc(100% - 12px);
+    max-width: none;
+    margin: 2px 6px 4px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+
+  .screen {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 14px 16px;
+    max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+  }
+
+  .poster canvas {
+    max-width: 210px;
+  }
+
+  .win-title {
+    font-size: 1.35rem;
+  }
+
+  .win-stats {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .win-stats > div {
+    padding: 7px 8px;
+  }
+
+  .win-stats strong {
+    font-size: 1.25rem;
+  }
+}
+
+/* Ajuste fino para telas muito estreitas (ex.: 320 × 568) */
+@media (max-width: 359px) {
+  #hud {
+    margin: 3px 4px 2px;
+    padding: 5px 6px;
+    gap: 4px;
+  }
+
+  .brand {
+    font-size: 0.8rem;
+  }
+
+  .tools {
+    gap: 2px;
+  }
+
+  .btn-hud-new {
+    height: 22px;
+    padding: 0 5px;
+    font-size: 0.6rem;
+  }
+
+  .tool {
+    width: 22px;
+    height: 22px;
+    font-size: 0.74rem;
+    border-width: 1px;
+  }
+
+  .stats {
+    grid-template-columns: 1.38fr 0.81fr 0.81fr;
+    gap: 3px;
+  }
+
+  .stat {
+    padding: 2px 4px;
+    gap: 3px;
+  }
+
+  .stat span {
+    font-size: 0.52rem;
+    letter-spacing: 0;
+  }
+
+  .stat strong {
+    font-size: 0.72rem;
+  }
+
+  #hint {
+    margin: 2px 4px 3px;
+    padding: 3px 8px;
+    font-size: 0.62rem;
+  }
+}
+
+/* Ajuste para celulares em orientação landscape (altura reduzida) */
+@media (max-height: 500px) and (orientation: landscape) {
+  #hud {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    flex-shrink: 0;
+    margin: 2px 6px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 6px;
   }
 
   .brand {
-    font-size: 0.92rem;
+    font-size: 0.82rem;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    width: auto;
   }
 
   .stat {
-    padding: 4px 8px;
+    padding: 2px 5px;
+    gap: 3px;
+    white-space: nowrap;
+  }
+
+  .stat span {
+    font-size: 0.52rem;
   }
 
   .stat strong {
-    font-size: 0.98rem;
+    font-size: 0.72rem;
+  }
+
+  .btn-hud-new {
+    height: 22px;
+    padding: 0 6px;
+    font-size: 0.6rem;
   }
 
   .tool {
-    width: 32px;
-    height: 32px;
-    font-size: 0.98rem;
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+  }
+
+  #stage {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  #scene {
+    flex: 1;
+    min-height: 0;
   }
 
   #hint {
-    font-size: 0.72rem;
-    bottom: 6px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-
-  .poster canvas {
-    max-width: 220px;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin: 1px 6px 2px;
+    padding: 2px 8px;
+    font-size: 0.6rem;
+    line-height: 1.15;
   }
 }
